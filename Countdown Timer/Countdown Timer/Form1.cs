@@ -51,5 +51,11 @@ namespace Countdown_Timer
         {
             timer.Stop();
         }
+
+        private void resetButton_Click(object sender, EventArgs e)
+        {
+            timer.Stop();
+            label1.Text = "HH:MM:SS";
+        }
     }
 }
