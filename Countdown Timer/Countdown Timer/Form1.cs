@@ -24,7 +24,7 @@ namespace Countdown_Timer
             if (timeLeft > 0) 
             {
                 timeLeft--;
-                label1.Text = $"Time Remaining:{timeLeft} Seconds";
+                label1.Text = $"{timeLeft} Seconds";
             }
             else
             {
