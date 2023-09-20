@@ -16,15 +16,49 @@ namespace Countdown_Timer
         {
             InitializeComponent();
         }
-        int timeLeft = 60;
+        double timeLeft; // seconds
+        double timeMinutes;
+        double timeHours;
         private void timer1_Tick(object sender, EventArgs e)
         {
-            //timeLeft = Convert.ToInt32(textBox1.Text);
             
-            if (timeLeft > 0) 
+            if (timeLeft >0 ) 
             {
+                minutesLabel.Text = Convert.ToString(timeMinutes);
+                hoursLabel.Text = Convert.ToString(timeHours);
                 timeLeft--;
-                label1.Text = $"{timeLeft} Seconds";
+                secondsLabel.Text = $"{timeLeft}";
+          
+            }
+            else if (timeMinutes > 0 && secondsLabel.Text == "0" && secondsLabel.Text != "SS")
+            {
+                    timeMinutes--;
+                    minutesLabel.Text = $"{timeMinutes}";
+                  
+
+                    timeLeft = 59; // Reset seconds to 59 when a minute passes
+
+                    secondsLabel.Text = $"{timeLeft--}";
+
+                if (secondsLabel.Text == "59") // fixed this weird thing of skipping a second in the begining
+                {
+                    timeLeft = 59;
+                }
+            }
+            else if (timeHours > 0 && minutesLabel.Text == "0" && minutesLabel.Text != "MM")
+            {
+                timeHours--;
+                hoursLabel.Text = $"{timeHours}";
+
+                timeMinutes = 59;
+
+                minutesLabel.Text = $"{timeMinutes--}";
+
+                if (minutesLabel.Text == "59") // fixed this weird thing of skipping a minute in the begining
+                {
+                    timeMinutes = 60;
+                }
+
             }
             else
             {
@@ -35,10 +69,24 @@ namespace Countdown_Timer
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (int.TryParse(textBox1.Text, out int inputSeconds))
+            if (double.TryParse(secondTextbox.Text, out double inputSeconds))
             {
                 timeLeft = inputSeconds;
-                timer.Interval = 1000; // Set the timer interval to 1 second
+                timer.Interval = 1000;
+                timer.Start();
+            }
+
+            if (double.TryParse(minuteTextbox.Text, out double inputMinutes))
+            {
+                timeMinutes = inputMinutes;
+                timer.Interval = 1000;
+                timer.Start();
+            }
+
+            if (double.TryParse(hourTextbox.Text, out double inputHours))
+            {
+                timeHours = inputHours;
+                timer.Interval = 1000;
                 timer.Start();
             }
             else
@@ -55,7 +103,14 @@ namespace Countdown_Timer
         private void resetButton_Click(object sender, EventArgs e)
         {
             timer.Stop();
-            label1.Text = "HH:MM:SS";
+            secondsLabel.Text = "SS";
+            minutesLabel.Text = "MM";
+            hoursLabel.Text = "HH";
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
